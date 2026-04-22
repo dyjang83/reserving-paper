@@ -1,0 +1,19 @@
+# Mac
+.DS_Store
+**/.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Data — never commit raw data
+data/raw/
+data/processed/
+
+# Build
+dist/
+site/
