@@ -97,9 +97,9 @@ def fit_xgboost(
 
     model = XGBRegressor(**params)
 
-    X_train = train[feature_cols]
-    y_train = train["log_target"]
-    X_test  = test[feature_cols]
+    X_train = train[feature_cols].replace([np.inf, -np.inf], np.nan).fillna(0)
+    y_train = train["log_target"].replace([np.inf, -np.inf], np.nan).fillna(0)
+    X_test  = test[feature_cols].replace([np.inf, -np.inf], np.nan).fillna(0)
     y_test  = np.log1p(test["target_ultimate"])
 
     fit_kwargs = {}
@@ -156,9 +156,9 @@ def fit_lightgbm(
 
     model = lgb.LGBMRegressor(**params)
 
-    X_train = train[feature_cols]
-    y_train = train["log_target"]
-    X_test  = test[feature_cols]
+    X_train = train[feature_cols].replace([np.inf, -np.inf], np.nan).fillna(0)
+    y_train = train["log_target"].replace([np.inf, -np.inf], np.nan).fillna(0)
+    X_test  = test[feature_cols].replace([np.inf, -np.inf], np.nan).fillna(0)
     y_test  = np.log1p(test["target_ultimate"])
 
     callbacks = []

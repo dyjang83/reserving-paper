@@ -111,8 +111,11 @@ def add_triangle_shape_features(df, upper_df):
     return df
 
 
-def add_lob_features(df):
-    return pd.get_dummies(df, columns=["line"], drop_first=False)
+def add_lob_features(df: pd.DataFrame) -> pd.DataFrame:
+    line_backup = df["line"].copy()
+    df = pd.get_dummies(df, columns=["line"], drop_first=False)
+    df["line"] = line_backup
+    return df
 
 
 def build_features(df, upper_df, basis="paid"):
@@ -125,8 +128,11 @@ def build_features(df, upper_df, basis="paid"):
     return ml_df
 
 
-def get_feature_columns(ml_df):
-    line_dummies = [c for c in ml_df.columns if c.startswith("line_")]
+def get_feature_columns(ml_df: pd.DataFrame) -> list[str]:
+    line_dummies = [
+        c for c in ml_df.columns
+        if c.startswith("line_") and c not in ("line_label", "tail_type")
+    ]
     base_features = [
         "dev_lag", "maturity_pct", "lags_remaining",
         "log_paid", "log_incurred", "log_premium",
